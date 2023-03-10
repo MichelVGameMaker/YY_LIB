@@ -1193,11 +1193,11 @@ The typical process runs in three steps:
 
 Each yy_ class simply returns a struct (with the asset's json) and methods to get and set key attributes.
 I decided not to create classes for the instances and the layers created by YY to keep the yy_room struct clean from methods. So structs returned by instance_create(), asset_create() or any layer_XX_create() will have no method.
-There are yy_room methods to update those that requires that you pass the target asset as argument. For instance .layer_visible_get() takes one argument which is the struct return by layer_XX_create(). 
+To modify instances, assets and layers please use the methodes from the yy_room class. For instance .layer_visible_get() takes one argument which is the struct return by layer_XX_create() (not the layer name as a string).
 Please note that instance_create() method returns the struct describing the instance placed in the room and not the name (identifier) of the instance. 
 If you need to store the reference of this instance, you can use its .name value (the INST_A2B8 that you see in the room editor).
 
-With YY you can update a currently opened project, Game Maker IDE is smart enough to detect this change in live and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted, if you click 'Reload', YY changes will be taken into account. 
+With YY you can update a currently opened project. Indeed, Game Maker IDE is smart enough to detect this change in live and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted, if you click 'Reload', YY changes will be taken into account. 
 Please note that, some update are not imediately visible in Game Maker IDE, notably:
 - when modifying object variables from the [Variables Definitions] section of the Object Editor, you will need to close the section and reopen it.
 - when modifying tiles for a tile layer, you will need to close the associated room and reopen it.
