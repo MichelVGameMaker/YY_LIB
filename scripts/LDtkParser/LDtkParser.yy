@@ -6,6 +6,6 @@
   "isCompatibility": false,
   "parent": {
     "name": "LDTK TOOLS BY EVOLEO AND AILWuFUL",
-    "path": "folders/LDTK TOOLS BY EVOLEO AND AILWuFUL.yy",
+    "path": "folders/OTHER STUFF NOT LINKED TO YY/LDTK TOOLS BY EVOLEO AND AILWuFUL.yy",
   },
 }

@@ -5,6 +5,6 @@
   "type": 1,
   "parent": {
     "name": "Shaders",
-    "path": "folders/IMGUIGML BY ROUSR/ImGuiGML/Shaders.yy",
+    "path": "folders/OTHER STUFF NOT LINKED TO YY/IMGUIGML BY ROUSR/ImGuiGML/Shaders.yy",
   },
 }

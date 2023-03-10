@@ -6,6 +6,6 @@
   "isCompatibility": false,
   "parent": {
     "name": "L2G - LDtk Importer",
-    "path": "folders/L2G - LDtk Importer.yy",
+    "path": "folders/OTHER STUFF NOT LINKED TO YY/L2G - LDtk Importer.yy",
   },
 }

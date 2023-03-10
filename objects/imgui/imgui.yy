@@ -34,6 +34,6 @@
   "overriddenProperties": [],
   "parent": {
     "name": "ImGuiGML",
-    "path": "folders/IMGUIGML BY ROUSR/ImGuiGML.yy",
+    "path": "folders/OTHER STUFF NOT LINKED TO YY/IMGUIGML BY ROUSR/ImGuiGML.yy",
   },
 }

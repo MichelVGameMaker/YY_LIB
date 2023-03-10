@@ -6,6 +6,6 @@
   "isCompatibility": false,
   "parent": {
     "name": "Scripts",
-    "path": "folders/IMGUIGML BY ROUSR/ImGuiGML/Scripts.yy",
+    "path": "folders/OTHER STUFF NOT LINKED TO YY/IMGUIGML BY ROUSR/ImGuiGML/Scripts.yy",
   },
 }

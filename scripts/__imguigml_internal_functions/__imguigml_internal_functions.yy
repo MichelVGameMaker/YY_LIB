@@ -6,6 +6,6 @@
   "isCompatibility": false,
   "parent": {
     "name": "__internal",
-    "path": "folders/IMGUIGML BY ROUSR/ImGuiGML/Scripts/extension/__internal.yy",
+    "path": "folders/OTHER STUFF NOT LINKED TO YY/IMGUIGML BY ROUSR/ImGuiGML/Scripts/extension/__internal.yy",
   },
 }
