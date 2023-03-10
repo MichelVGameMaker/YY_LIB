@@ -1,4 +1,4 @@
-/*Welcome to YY
+/*Welcome to YY!
 YY is a small collection of functions to adjust Game Maker room files and object files. It is intended to pair with level editing tools to facilitate import into Game Maker project.
 
 Features overview:
