@@ -3,7 +3,7 @@ YY is a small collection of functions to adjust Game Maker room files and object
 
 ## About L2G
 ### Use case
-YY allows to modify Game Maker room files and object files. It is intended to help people work on level editor features for instance to import room data from an external level editor or to replicate in room data modifications done at runtime. 
+YY allows to modify Game Maker room files and object files. It is intended to help people work on level editor features. For example to import room data from an external level editor or to replicate in room data modifications done at runtime. 
 I tried to keep the syntax close to what you would use in GML so that you can, for example, create an instance in your room file with instance_create().
 There is a basic demo with two example of how to parse a room at runtime in room .yy file. The first showcases serializing instances created at runtime. The second showcases serializing tiles that you have created at runtime.
 I have another example allowing to import the full configuration for entities from a LDtk file, but it is not documented.
@@ -57,6 +57,13 @@ Example:<br>
 > _room.instance_set_property(_inst, "health", 10) // set a property for the instance (=variables value from the [Variable] section for the instance in the Room Editor).<br>
 // 3.write back the data to the file<br>
 _room_struct.save_to_directory();<br>
+
+### Game Maker formating
+YY manages data accordingly to what Game Maker expects. In particular:
+- creating an instance into a room will also add it to the instances_creation_order.
+- deleting an instance will also delete it from the instances_creation_order.
+- creating a property into an object will set the proper type and the proper object (potentialy a parent/ancestor).
+- setting a property value into an instance will make sure the property exists and points to the proper object (looping in parent/ancestor).
 
 ### Classes and functions
 [See the wiki for more details](https://github.com/MichelVGameMaker/YY_LIB/wiki) 
