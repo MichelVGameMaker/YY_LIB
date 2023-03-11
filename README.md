@@ -34,7 +34,7 @@ YY needs to be imported as a local package in your Game Maker project.
 -	Download the .yymp file from GITHUB.
 -	Import it inside your project. You can do this by dragging the *. yymp file from an explorer window onto the GameMaker IDE or by clicking "Import Local Package" within the Tools Menu. In both case, a window will pop up to define import parameters. Click “add all” and “OK”. 
 
-### Make sandboxing is de-activated
+### Make sure sandboxing is de-activated
 This will create a two folders in your Asset Browser labeled “YY - GM Files Modifier” and "SNAP". The code is ready to be used.
 Still, if the Game Maker file you want to update is out of Game Maker sandbox repository, which will surely be the case, you need to de-activate sandboxing. You can do so, on the Desktop targets (Windows, macOS, and Ubuntu (Linux)), by checking the “Disable file system sandbox” option in the Game Options for the target platform.
 
