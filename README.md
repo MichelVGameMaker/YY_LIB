@@ -47,16 +47,19 @@ The typical process runs in three steps:
 -	2.update the data accordingly to your need, 
 -	3.write back the data to the file.
 
-Example:
-// 1.create a yy_room for the current room
-var _room = new yy_room(filename_dir(GM_project_filename), room_get_name(room)); 
-// 2.update the data
-_room.set_width(400); // change room size
-_room.instance_layer_create("layer_1", 100) // create a layer in the room at depth 100
-var _inst _room.instance_create(0, 0, _room.get_layer("layer_1"), "YY_TEST_object3") // create an instance onto the layer
-_room.instance_set_property(_inst, "health", 10) // set a property for the instance (=variables value from the [Variable] section for the instance in the Room Editor).
-// 3.write back the data to the file
-_room_struct.save_to_directory(); 
+Example:<br>
+> // 1.create a yy_room for the current room<br>
+> var _room = new yy_room(filename_dir(GM_project_filename), room_get_name(room)); <br>
+> // 2.update the data<br>
+> _room.set_width(400); // change room size<br>
+> _room.instance_layer_create("layer_1", 100) // create a layer in the room at depth 100<br>
+> var _inst _room.instance_create(0, 0, _room.get_layer("layer_1"), "YY_TEST_object3") // create an instance onto the layer<br>
+> _room.instance_set_property(_inst, "health", 10) // set a property for the instance (=variables value from the [Variable] section for the instance in the Room Editor).<br>
+// 3.write back the data to the file<br>
+_room_struct.save_to_directory();<br>
+
+### Classes and functions
+[See the wiki for more details](https://github.com/MichelVGameMaker/YY_LIB/wiki) 
 
 ## What happens when a Game Maker file is updated
 With YY you can update a currently opened project. Indeed, Game Maker IDE is smart enough to detect this change in live and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted, if you click 'Reload', YY changes will be taken into account. 
