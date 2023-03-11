@@ -2,25 +2,15 @@
 YY is a small collection of functions to adjust Game Maker room files and object files within your project directory. It is intended to pair with external level editor to facilitate import into Game Maker project.
 
 ## About L2G
+
 ### Use case
 YY allows to modify Game Maker room files and object files. It is intended to help people work on level editor features. For example to import room data from an external level editor or to replicate in room data modifications done at runtime. 
+
+### Features
+It allows to modify rooms, in particular by creating layers and populating them with instances or tiles. It also allows to modify object, in particular by creating properties (=variables from [Variables Definitions] section of Objects Editor).
 I tried to keep the syntax close to what you would use in GML so that you can, for example, create an instance in your room file with instance_create().
 There is a basic demo with two example of how to parse a room at runtime in room .yy file. The first showcases serializing instances created at runtime. The second showcases serializing tiles that you have created at runtime.
 I have another example allowing to import the full configuration for entities from a LDtk file, but it is not documented.
-
-### Features:
-Layer :
-- create layers (instances layer, assets layer, tiles layer and background layer).
-- modify layers' attribute (depth, visible, grid).
-- populating layers with instances, tiles and sprites depending on their type.
-- clear all layers or clear a specific layer. 
-
-Instances : 
-- setting instances' attributes (x/y position, scales, image_angle, image_speed, image_blend)
-- setting properties values for instances (=variables value from the [Variable] section for the instance in the Room Editor). 
-
-Object:
-- modify objects configuration, in particular properties (=variables from [Variables Definitions] section of Objects Editor).
 
 ### License
 YY is fully free. Do whatever you want with it.
@@ -28,7 +18,9 @@ YY is fully free. Do whatever you want with it.
 ### Version and Platform
 YY is tested on Game Maker LTS and on windows platform.
 
+
 ## Installation
+
 ### Importing YY in your project
 YY needs to be imported as a local package in your Game Maker project.
 -	Download the .yymp file from GITHUB.
@@ -37,6 +29,7 @@ YY needs to be imported as a local package in your Game Maker project.
 ### Make sure sandboxing is de-activated
 This will create a two folders in your Asset Browser labeled “YY - GM Files Modifier” and "SNAP". The code is ready to be used.
 Still, if the Game Maker file you want to update is out of Game Maker sandbox repository, which will surely be the case, you need to de-activate sandboxing. You can do so, on the Desktop targets (Windows, macOS, and Ubuntu (Linux)), by checking the “Disable file system sandbox” option in the Game Options for the target platform.
+
 
 ## How to use
 
@@ -68,7 +61,23 @@ YY manages data accordingly to what Game Maker expects. In particular:
 ### Classes and functions
 [See the wiki for more details](https://github.com/MichelVGameMaker/YY_LIB/wiki) 
 
+### Features overview
+Layer :
+- create layers (instances layer, assets layer, tiles layer and background layer).
+- modify layers' attribute (depth, visible, grid).
+- populating layers with instances, tiles and sprites depending on their type.
+- clear all layers or clear a specific layer. 
+
+Instances : 
+- setting instances' attributes (x/y position, scales, image_angle, image_speed, image_blend)
+- setting properties values for instances (=variables value from the [Variable] section for the instance in the Room Editor). 
+
+Object:
+- modify objects configuration, in particular properties (=variables from [Variables Definitions] section of Objects Editor).
+
+
 ## What happens when a Game Maker file is updated
+
 With YY you can update a currently opened project. Indeed, Game Maker IDE is smart enough to detect this change in live and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted, if you click 'Reload', YY changes will be taken into account. 
 Please note that, some updates are not imediately visible in Game Maker IDE, notably:
 - when modifying object variables from the [Variables Definitions] section of the Object Editor, you will need to close the section and reopen it.
@@ -76,6 +85,8 @@ Please note that, some updates are not imediately visible in Game Maker IDE, not
 
 Documentation is a limited so far. You will have to browse through the methods available in the two classes.
 
+
 ## Behind the hood
+
 YY mainly relies on Juju's SNAP to preserve the json format expected by Game Maker. SNAP offers advanced data parsing features. If you do not know about it, or worse about Juju’s library, you can check them out here: https://github.com/JujuAdams
 Other than that, YY is just there to modify data structure accordingly to what Game Maker expects. For instance, it will scan object's ancestors for property definition to avoid conflict, it will delete instances from the 'creation order' list when deleting instances from a layer.... It does a lot of data processes and is not fast.
