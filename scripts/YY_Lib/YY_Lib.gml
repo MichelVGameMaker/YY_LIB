@@ -437,7 +437,7 @@ function yy_room(_gm_project_directory, _room_name) constructor
 	// Remove the specified instance from the instance creation order.
 	static remove_instance_creation = function(_instance_struct)
 	{
-		/*debuging line shw("Removing ", _instance_struct.name); 		shw("Array before", __debug_creation_order());*/
+		/*debuging line*/ shw("Removing ", _instance_struct.name); 		shw("Array before", __debug_creation_order());
 		var _name = _instance_struct.name
 		var _array = __struct.instanceCreationOrder;
 		var _i = array_length(_array);
@@ -449,10 +449,10 @@ function yy_room(_gm_project_directory, _room_name) constructor
 				array_delete(_array, _i, 1);	
 			}
 		}
-		/*debuging line sshw("Array after", __debug_creation_order());*/
+		/*debuging line*/ shw("Array after", __debug_creation_order());
 	}
 
-	/*debuging function static __debug_creation_order = function() {
+	/*debuging function*/ static __debug_creation_order = function() {
 		var _array = __struct.instanceCreationOrder;
 		var _i = array_length(_array);
 		var _st = "";
@@ -462,7 +462,7 @@ function yy_room(_gm_project_directory, _room_name) constructor
 			_st += string(_array[_i].name) + ", ";
 		}
 		return _st;
-	}*/
+	}
 	
 	
 	static asset_create = function(_layer, _x, _y, _sprite_name) {
@@ -606,13 +606,13 @@ function yy_room(_gm_project_directory, _room_name) constructor
 		// clear from instance creation order
 		var _array = _layer_struct.instances;
 		var _i = array_length(_array);
-			shw("Removing from creation order ", _i, " instances.");
-			repeat(_i)
-			{
-				--_i;
-				shw("Remove step ", _i);
-				remove_instance_creation(_array[_i]);
-			}
+		shw("[YY debug]: Removing from creation order ", _i, " instances.");
+		repeat(_i)
+		{
+			--_i;
+			shw("[YY debug]Remove step ", _i);
+			remove_instance_creation(_array[_i]);
+		}
 		// clear instances array
 		_layer_struct.instances = [];
 		return true;
@@ -1135,6 +1135,19 @@ function yy_tileset_exist(_gm_project_directory, _tileset_name) {
 	return file_exists(_gm_project_directory + "/tilesets/" + string(_tileset_name) + "/" + string(_tileset_name) + ".yy");
 }
 
+/// @function					shw(string, ..., string)
+/// @description				show debug shortcut
+function shw() {
+    var _string = "";
+    var _i = 0;
+    repeat(argument_count)
+    {
+        var _str = string(argument[_i])
+		_string += string(argument[_i]);
+        ++_i;
+    }
+	show_debug_message(_string)
+}
 
 #region Minimalist Documentation
 function YY_README_LINK() {}  // Fake anchor so that double-clicking will bring you here.

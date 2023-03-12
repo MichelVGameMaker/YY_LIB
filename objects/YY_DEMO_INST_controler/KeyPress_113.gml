@@ -13,7 +13,7 @@ var _room_struct = room_struct;
 
 // get reference to the layer in yy_room data
 var _layer = _room_struct.get_layer("Instances");
-show_debug_message("Clear before");
+show_debug_message("Clear 'Instances' layer before populating instances");
 
 // clear the layer in yy_room data
 _room_struct.layer_instances_clear(_layer);

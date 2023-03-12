@@ -3,7 +3,7 @@
   "resourceVersion": "1.1",
   "name": "Windows",
   "ConfigValues": {
-    "Dev": {"option_windows_disable_sandbox":"true","option_windows_use_x64":"true","option_windows_display_name":"[DASH] PROJECT",},
+    "Dev": {"option_windows_disable_sandbox":"true","option_windows_use_x64":"true","option_windows_display_name":"YY Library","option_windows_description_info":".yy Game Maker file modifier","option_windows_copyright_info":"Nope","option_windows_product_info":"YY Library","option_windows_company_info":"MichelVGameMaker",},
   },
   "option_windows_display_name": "DASH",
   "option_windows_executable_name": "${project_name}",
