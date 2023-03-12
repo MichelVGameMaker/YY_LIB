@@ -1,15 +1,12 @@
 /*Welcome to YY!
-YY is a small collection of functions to adjust Game Maker room files and object files. It is intended to pair with level editing tools to facilitate import into Game Maker project.
+# YY LIB - Game Maker Files Modifier
+YY is a small collection of functions to adjust Game Maker room files and object files within your project directory. It is intended to pair with external level editor to facilitate import into Game Maker project.
 
-Features overview:
-YY focuses on the use cases I needed. 
-- create layers and modify their key properties
-- populating layers with instances, tiles and sprites depending on their type.
-- setting instances key attributes (x/y position, scales...) and property values ( [Variables] of instances in the room editor).
-- modify object configuration, in particular properties (=variables from [Variables Definitions] section of Objects Editor).
-To avoid having too much impact in your project structure, YY is not capable of creating files, so it needs to recycle existing object files and room files. 
+It allows to modify rooms, in particular by creating layers and populating them with instances or tiles.  
+It also allows to modify object, in particular by creating properties (=variables from [Variables Definitions] section of Objects Editor).  
+I tried to keep the syntax close to what you would use in GML so that you can, for example, create an instance in your room file with instance_create().  
 
-More details in the documentation >>YY_README_LINK()<<
+More details in the documentation >>YY_README_LINK()<< mouse middle-button link
 */
 
 enum   YY_varType								// Game Maker variable varType (integer).
@@ -82,7 +79,7 @@ It also comes with the following methods:
   */
 #endregion 
 
-// TODO : add layer should check depth and name before adding the layer
+// TODO : addinf layer should check depth and name conflicts before adding the layer
 function yy_room(_gm_project_directory, _room_name) constructor 
 {
 	__struct    = undefined;   // The struct holding all the data from the Game Maker room .yy file
@@ -402,14 +399,10 @@ function yy_room(_gm_project_directory, _room_name) constructor
 				var _variable_name_i  = _variables_names[ _i];
 				var _variable_value_i = _variables_struct[$ _variable_name_i];
 				{
-					/*var _new_prop = __create_instance_property(_object_name, _variable_name_i, _variables_struct[$ _variable_name_i]);
-					array_push(_properties_array, _new_prop);
-					_added_a_property = true;*/
 					instance_set_property(_yy_instance_struct, _variable_name_i, _variable_value_i);
 				}
 				_i++;
 			}
-			//if _added_a_property _yy_instance_struct[$ "properties"] = _properties_array;
 		}
 		array_push(_layer_struct.instances, _yy_instance_struct);
 		
@@ -1146,30 +1139,20 @@ function yy_tileset_exist(_gm_project_directory, _tileset_name) {
 #region Minimalist Documentation
 function YY_README_LINK() {}  // Fake anchor so that double-clicking will bring you here.
 /* 
-# YY
-YY is a small collection of functions to adjust Game Maker room files and object files. It is intended to pair with external level editor to facilitate import into Game Maker project.
+# YY LIB - Game Maker Files Modifier
+YY is a small collection of functions to adjust Game Maker room files and object files within your project directory. It is intended to pair with external level editor to facilitate import into Game Maker project.
 
 ## About L2G
+
 ### Use case
-YY is intended to help people working on importers to import data from external room editor or live room editor. I tried to keep the syntax close to what you would use in GML so that you can for instance create an instance in your room file with instance_create().
-There is a basic demo. that allows to parse instances created in YY_DEMO room at runtime into the associated YY_DEMO.yy file.
-I am working on another example: a function allowing to import the full configuration for entities from a LDtk file.
+YY allows to modify Game Maker room files and object files. It is intended to help people work on level editor features. For example to import room data from an external level editor or to replicate in room data modifications done at runtime. 
 
-### Features:
-YY focuses on the use cases I needed. 
-- create layer for 4 layer types: instances layer, assets layer, tiles layer and background layer.
-- modify key properties in existing layers: depth, visible, grid and of course populating layers with instances, tiles and sprites depending on their type.
-- clear all layers or clear a specific layer.
-- setting instances key attributes: its x/y position, scales, image_angle, image_speed, image_blend)
-- setting propert values for instances ( [Variables] of instances in the room editor).
-- modify object configuration, in particular properties (=variables from [Variables Definitions] section of Objects Editor).
-
-### Functions:
-YY is only three classes; one for room, one for object and one 'light' for sprite:
--	The room class allows to create and modify layers, and to create and modify instances (including their properties).
--	The object class allows to create properties (=variables from [Variables Definitions] section of Objects Editor).
--	The sprite class only allow to get sprite dimensions, and not to modify the file itself.
-To avoid having too much impact in your project structure, YY is not capable of creating files, so it needs to recycle existing objects and rooms. 
+### Features
+It allows to modify rooms, in particular by creating layers and populating them with instances or tiles.  
+It also allows to modify object, in particular by creating properties (=variables from [Variables Definitions] section of Objects Editor).  
+I tried to keep the syntax close to what you would use in GML so that you can, for example, create an instance in your room file with instance_create().  
+There is a basic demo with two example of how to parse a room at runtime in room .yy file. The first showcases serializing instances created at runtime. The second showcases serializing tiles that you have created at runtime.  
+I have another example allowing to import the full configuration for entities from a LDtk file, but it is not documented.
 
 ### License
 YY is fully free. Do whatever you want with it.
@@ -1177,182 +1160,214 @@ YY is fully free. Do whatever you want with it.
 ### Version and Platform
 YY is tested on Game Maker LTS and on windows platform.
 
+
 ## Installation
+
+### Importing YY in your project
 YY needs to be imported as a local package in your Game Maker project.
 -	Download the .yymp file from GITHUB.
--	Import it inside your project. You can do this by dragging the *. yymp file from an explorer window onto the GameMaker IDE or by clicking "Import Local Package" within the Tools Menu. In both case, a window will pop up to define import parameters. Click “add all” and “OK”. This will create a new folders in your Asset Browser labeled “L2G”. You are all set.
-If your source file is out of Game Maker sandbox repository, which will surely be the case, you need to de-activate sandboxing. You can do so, on the Desktop targets (Windows, macOS, and Ubuntu (Linux)), by checking the “Disable file system sandbox” option in the Game Options for the target platform.
+-	Import it inside your project. You can do this by dragging the *. yymp file from an explorer window onto the GameMaker IDE or by clicking "Import Local Package" within the Tools Menu. In both case, a window will pop up to define import parameters. Click “add all” and “OK”.  
+This will create a two folders in your Asset Browser labeled “YY - GM Files Modifier” and "SNAP". The code is ready to be used.
+
+### Make sure sandboxing is de-activated
+There is likely one last step to use YY. Indeed, if the Game Maker files you want to update are located out of Game Maker sandbox repository, which will surely be the case, you need to de-activate sandboxing. You can do so, on the Desktop targets (Windows, macOS, and Ubuntu (Linux)), by checking the “Disable file system sandbox” option in the Game Options for the target platform.
+
 
 ## How to use
-A yy_room or yy_object class is created by calling the constructor with a Game Maker project directory and an asset name.
-As YY is not capable of creating files, you will need to recycle existing files already created within Game Maker. 
+
+### Overall process
+YY is not capable of creating files (to avoid having too much impact in your project structure), you will need to recycle existing files already created within Game Maker. 
 The typical process runs in three steps: 
--	create a class from an existing Game Maker file, 
--	update the data accordingly to your need, 
--	write back the data to the file.
+-	1.create a yy_class from an existing Game Maker file, this will hold all data from the targeted Game Maker file, 
+-	2.update the data accordingly to your need, 
+-	3.write back the data to the file.
 
-Each yy_ class simply returns a struct (with the asset's json) and methods to get and set key attributes.
-I decided not to create classes for the instances and the layers created by YY to keep the yy_room struct clean from methods. So structs returned by instance_create(), asset_create() or any layer_XX_create() will have no method.
-There are yy_room methods to update those that requires that you pass the target asset as argument. For instance .layer_visible_get() takes one argument which is the struct return by layer_XX_create(). 
-Please note that instance_create() method returns the struct describing the instance placed in the room and not the name (identifier) of the instance. 
-If you need to store the reference of this instance, you can use its .name value (the INST_A2B8 that you see in the room editor).
+Example:<br>
+> // 1.create a yy_room for the current room<br>
+> var _room = new yy_room(filename_dir(GM_project_filename), room_get_name(room)); <br>
+> // 2.update the data<br>
+> _room.set_width(400); // change room size<br>
+> _room.instance_layer_create("layer_1", 100) // create a layer in the room at depth 100<br>
+> var _inst _room.instance_create(0, 0, _room.get_layer("layer_1"), "YY_TEST_object3") // create an instance onto the layer<br>
+> _room.instance_set_property(_inst, "health", 10) // set a property for the instance (=variables value from the [Variable] section for the instance in the Room Editor).<br>
+// 3.write back the data to the file<br>
+_room_struct.save_to_directory();<br>
 
-With YY you can update a currently opened project, Game Maker IDE is smart enough to detect this change in live and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted, if you click 'Reload', YY changes will be taken into account. 
-Please note that, some update are not imediately visible in Game Maker IDE, notably:
+### Effects within Game Maker IDE
+Once a Game Maker .yy file updated with save_to_directory(), changes will be reflected within Game Maker IDE. Updating a project which is currently opened is fine. Indeed, Game Maker IDE is smart enough to detect these changes 'live' and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted and the resource will be kept unchanged, if you click 'Reload', YY changes will be taken into account.  
+
+Please note that, some updates are not imediately visible in Game Maker IDE, notably:
 - when modifying object variables from the [Variables Definitions] section of the Object Editor, you will need to close the section and reopen it.
 - when modifying tiles for a tile layer, you will need to close the associated room and reopen it.
-Documentation is a limited so far. You will have to browse through the methods available in the two classes.
+
+### Features overview
+Layer :
+- create layers (instances layer, assets layer, tiles layer and background layer).
+- modify layers' attribute (depth, visible, grid).
+- populating layers with instances, tiles and sprites depending on their type.
+- clear all layers or clear a specific layer. 
+
+Instances : 
+- setting instances' attributes (x/y position, scales, image_angle, image_speed, image_blend)
+- setting properties values for instances (=variables value from the [Variable] section for the instance in the Room Editor). 
+
+Object:
+- modify objects configuration, in particular properties (=variables from [Variables Definitions] section of Objects Editor).
+
+
+### Classes and functions documentation
+[See the wiki for more details](https://github.com/MichelVGameMaker/YY_LIB/wiki) 
+Documentation is a limited so far.
+
+### YY respects Game Maker formating
+YY manages data accordingly to what Game Maker expects. In particular:
+- creating an instance into a room will also add it to the instances_creation_order.
+- deleting an instance will also delete it from the instances_creation_order.
+- creating a property into an object will set the proper type and the proper object (potentialy a parent/ancestor).
+- setting a property value into an instance will make sure the property exists and points to the proper object (looping in parent/ancestor).
+
 
 ## Behind the hood
-YY mainly relies on Juju's SNAP to preserve the json format expected by Game Maker. SNAP offers advanced data parsing features. If you do not know about it, or worse about Juju’s library, you can check them out here: https://github.com/JujuAdams
-YY does a lot of files and data processes to ensure every formating matches Game Maker standard. It is not fast.
 
-## Using YY
-
-### Game Maker main requirements
-YY manages data accordingly to what Game Maker expects. In particular:
-- adding an instance to the instances_creation_order when creating it into a room.
-- referencing the proper type and object when defining a property into an object
-- referencing the proper object when setting a property value into an instance and making sure the property exists before doing so.
-
-### Properties
-A property is a variable from the [Variables Definitions] section of the Object Editor.
-Properties need to use the proper category in object files (Property or overriddenProperty) and to reference the proper object (where it is defined), in object files and for instances data in room files.
-The rules are as follow:
-- Classic Properties are those just defined in the current object and not in its parents/ancestors. They appear in the object file using the Property type and reference the current object.
-- Inherited properties are those not modified in the object and are fully inherited from parents/ancestors. They do not appear in the object file. When defined in an instance they reference the exact parent where they come from.
-- Overridden properties are those inherited from parents/ancestors but modified for the current object. They appear in the object file using the overriddenProperty type and reference the ??? and in insyance.
-
-YY uses the serialized format for tiles data. This is just the list of all tiles data one after another (considering tile index and mirroring). Game Maker 2.3 introduced a new format which is the compressed format which is more complex to encode. Game Maker will automaticaly translates tiles data frop the serialized format to the compressed format so that we can just lazily parse data using the serialized formating. Please note that if you change a tile layer in a project cureently opened in Game Mzker IDE, you will need to close and reopen the room for your changes to be reflected in the room editor.
+YY mainly relies on Juju's SNAP to preserve the json format expected by Game Maker. SNAP offers advanced data parsing features. If you do not know about it, or worse about Juju’s library, you can check them out here: https://github.com/JujuAdams.  
+Other than that, YY is just there to modify data structure accordingly to what Game Maker expects. For instance, it will scan object's ancestors for property definition to avoid conflict, it will delete instances from the 'creation order' list when deleting instances from a layer.... It does a lot of data processes and is not fast.
 */
+#endregion
 
+#region Game Maker .yy file specication
 /*
-.yy json file specification
-This section is not Game Maker specification but the results from my very limited retro-engineering
+This section is NOT Game Maker specification but the results from my very limited retro-engineering
+## Romm .yy file / json
+The room file is a BIG json. For YY library, the most important part of this json is the layers array.
 
-The data stored in the __struct data of each class reproduces the format of the associated .yy object file.
-
-1.Object .yy file:
-___________________
-
-  properties, overriddenProperties arrays are the most important attributes here.
-  Attribute           Type         Value (= or example)	          Definition/Note
-  resourceType:       {string},    = "GMObject",                     the type that you will find in all Game Maker resources.
-  resourceVersion:    {float},     = "1.0",                          the formating version. 1.0 seems to always work even if I saw some resources with 1.1.
-  name:               {string},    Ex: "oBackground",                the name of the resource as it appears in your Game Maker project.
-  spriteId:           {struct},    {see below},                      a struct with two attributes (name, path) pointing to the sprite resource associated to this object.	
-        name:         {string},    Ex: "sSPR",                       the name of the sprite resource as it appears in your Game Maker project.
-        path:         {file path}, Ex: sprites/sSPR/sSPR.yy",        the path to the sprite resource. Path is relative to the Game Maker project directory.
-  solid:              {bool},      Ex: false                         is the object solid, as defined by Game Maker Object Editor. YY does not modify this
-  visible:            {bool},      Ex: false                         is the object visible, as defined by Game Maker Object Editor. YY does not modify this
-  persistent:         {bool},      Ex: true                          is the object persistent, as defined by Game Maker Object Editor. YY does not modify this
-  managed:            {bool},      Ex: false                         I don't know what this is. YY does not modify this.
-  spriteMaskId:       {int?}       Ex: null                          I guess it has to do with collision masj. YY does not modify this.
-  physicsObject:      {bool},      Ex: false                         value of the associated physic attribute, YY does not modify this.
-  physicsSensor:      {bool},      Ex: false                         value of the associated physic attribute, YY does not modify this.
-  !!!!!!!!!!!!!!!!!!!What is below is Work in progress!!!!!!!!!!!!!!!!!!
-  physicsShape: 1, value of the associated physic attribute, YY does not modify this.
-  physicsGroup: 0, value of the associated physic attribute, YY does not modify this.
-  physicsDensity:     {real},       Ex: 0.5                         value of the associated physic attribute, YY does not modify this.
-  physicsRestitution: {real},    Ex: 0.1                            value of the associated physic attribute, YY does not modify this.
-  physicsLinearDamping: {real},  Ex: 0.1                            value of the associated physic attribute, YY does not modify this.
-  physicsAngularDamping: {real}, Ex: 0.1                            value of the associated physic attribute, YY does not modify this.
-  physicsFriction:    {real},      Ex: 0.2                          value of the associated physic attribute, YY does not modify this.
-  physicsStartAwake:  {bool},      Ex: true                         value of the associated physic attribute, YY does not modify this.
-  physicsKinematic:   {bool},      Ex: false                        value of the associated physic attribute, YY does not modify this.
-  physicsShapePoints: {array},                                      value of the associated physic attribute, YY does not modify this.
-  eventList:          {array},                                      list of events defined in Game Maker. Each defined as a struct. YY does not modify this.
-  tags:               {array},                                      I think this is the list of tags defined for the object. YY does not modify this.
-  properties": [],    {array}                                       array of overriden properties (see format below // Property json)
-  overriddenProperties": {array}                                    array of  properties (see format below // Overridden properties json)
-  parent:             {struct},    {see below},                     a struct with two attributes (name, path) pointing to the folder resource (Group from Game MAker IDE)? I do not use this.	
-        name:         {string},    Ex: "MyGroup",                   the name of the folder resource as it appears in your Game Maker project.
-        path:         {file path}, Ex: folders/MyGroup/MyGroup.yy", the path to the folder resource. Path is relative to the Game Maker project directory.
-  
-  // Property json
-    Properties are those defined in this object but that do not exist in parent/ancestors (Property).
-    The struct is mainly flat with two nested structs
-    .name name of the property
-    .value default value of the property
-     .type integer value defining the type o variable
-    .rangeMin
-    .rangeMax
-    .rangeEnabled boolean
-    .propertyId
-    .objectId
-  
-  // Overridden properties json
-    Overridden properties are those inherited from a parent/ancestors and modified in this object.
-    The struct is mainly flat with two nested structs
-    .name empty (the name is insidde propertyid)
-    .value
-    .propertyId
-    .objectId
-  
-  // NB: Property that are just inherited from a parent/ancestors without modification in this object do not appear.
+  |Attribute                  |Type         | Value (= or example)	         | Definition/Note
+  |---                        |---          | ---                            | ---
+  |resourceType:              |{string},    = "GMObject",                    |the type that you will find in all Game Maker resources.
+  |resourceVersion:           |{float},     = "1.0",                         |the formating version. 1.0 seems to always work even if I saw some resources with 1.1.
+  |name:                      |{string},    Ex: "ROOM1",                     |the name of the resource as it appears in your Game Maker project.
+  |isDnd:                     |             |false,                          |
+  |volume:                    |             |1.0,                            |
+  |parentRoom:                |             |null,                           |
+  |views:                     |{array}      |                                |array holding the 8 views, , YY does not modify views that will be inherited from the parsed file
+  |layers:                    |{array}      |                                |this the heart of a room content. Each layer is a struct has defined below in the layer section
+  |inheritLayers:             |false,       |,                               |
+  |creationCodeFile:          |"",          |,                               |
+  |inheritCode":              |{}           |false,                          |
+  |instanceCreationOrder      |{array},     |{see below},                    |lists all the instances in the room in the order that they will be created.  (each instances is a struct with two attribute : the instance ID and the path to the room)
+  |  >name:                   |{string},    |                                |the name of the instance (ex: inst_442BED1)
+  |  >path:                   |{path},      |                                |rooms/ROOM1/ROOM1.yy
+  |inheritCreationOrder:      |{}           |false,		                     |
+  |sequenceId:                |{}           |null,		                     |
+  |roomSettings:              |{struct}     |{see below},                    |struct with the four  room settings: inherit settings, width, height, persistent. YY does not modify those
+  |  >inheritRoomSettings:    |{bool},      |false,                          | I will document later.
+  |  >Width:                  |{int},       |1280,                           |width for the room, 
+  |  >Height:                 |{int},       |1280,                           |height for the room,
+  |  >persistent:             |{bool}       |false,                          |I will document later.
+  |viewSettings:              |{struct}     |{see below},                    |struct with the four view settings: inherit settings, enable, clear background, clear display buffer. YY does not modify those
+  |  >inheritViewSettings:    |{bool},      |false,                          |enable the inheritance of this Views settings independently of the rest of the room settings.
+  |  >enableViews:            |{bool},      |false,                          |enable camera views in the room.
+  |  >clearViewBackground:    |{bool},      |false,	                         |I will document later.
+  |  >clearDisplayBuffer:     |{bool},      |true,                           |enable pre-filling of the display buffer before drawing anything else.
+  |physicsSettings:           |{struct}     |{see below},                    |struct with the five physics settings: inherit settings, physics, GravityX, GravityY, PixToMetres
+  |  >inheritPhysicsSettings: |{bool},      |false,                          |enable the inheritance of this Physics settings independently of the rest of the room settings.
+  |  >PhysicsWorld:           |{bool},      |false,                          |enable Physics for the room.
+  |  >PhysicsWorldGravityX:   |{real},      |0.0,                            |the x component of the gravity vector for the room.
+  |  >PhysicsWorldGravityY:   |{real},      |10.0,                           |the y component of the gravity vector for the room.
+  |  >PhysicsWorldPixToMetres:|{real},      |0.1,                            |the ratio of pixels on screen to metres in the real world for the room. A ratio of 32:1 will be specified as 1/32 (or 0.03125)
+  |parent:                    |{struct},    |{see below},                    |a struct with two attributes (name, path) pointing to the folder resource (Group from Game MAker IDE)? I do not use this.	
+  |  >name:                   |{string},    |Ex: "MyGroup",                  |name of the folder resource as it appears in your Game Maker project.
+  |  >path:                   |{file path}, |Ex: folders/MyGroup/MyGroup.yy",|path to the folder resource. Path is relative to the Game Maker project directory.
+  |tags:                      |{array},     |Ex: []                          |I think this is the list of tags defined for the object. YY does not modify this.
 
 
-2.Room
-______
-
-  layers array is the most important attribute here.
-  Attribute        Type         Value (= or example)	          Definition/Note
-  resourceType:    {string},    = "GMObject",                     the type that you will find in all Game Maker resources.
-  resourceVersion: {float},     = "1.0",                          the formating version. 1.0 seems to always work even if I saw some resources with 1.1.
-  name:            {string},    Ex: "ROOM1",                      the name of the resource as it appears in your Game Maker project.
-  !!!!!!!!!!!!!!!!!!!What is below is Work in progress!!!!!!!!!!!!!!!!!!  
-  isDnd: false,
-  volume: 1.0,
-  parentRoom": null,
-  views: {array} array holding the 8 views, , YY does not modify views that will be inherited from the parsed file
-  layers: {array} this the heart of a room content. Each layer is a struct has defined below in the layer section
-  inheritLayers": false,
-  creationCodeFile": "",
-  inheritCode": false,
-  instanceCreationOrder {array} lists all the instances in the room in the order that they will be created.  (each instances is a struct with two attribute : the instance ID and the path to the room)
-  	name: {string} , the name of the instance (ex: inst_442BED1)
-  	path: {path},	rooms/ROOM1/ROOM1.yy
-  inheritCreationOrder: false,
-  sequenceId: null,
-  roomSettings: {struct} hold the four room settings: inherit settings, width, height, persistent. YY does not modify those
-      inheritRoomSettings: {bool}, false, 
-      Width: {int}, 1280, width for the room, 
-      Height: {int}, 1280, height for the room,
-      persistent: [bool} false,
-    },
-  viewSettings: {struct} hold the four view settings: inherit settings, enable, clear background, clear display buffer. YY does not modify those
-      inheritViewSettings: {bool}, false, Enable the inheritance of this Views settings independently of the rest of the room settings.
-      enableViews: {bool}, false, enable camera views in the room.
-      clearViewBackground: {bool}, false,
-      clearDisplayBuffer: {bool}, true, Enable pre-filling of the display buffer before drawing anything els.
-    },
-  physicsSettings: {struct} hold the five view settings: inherit settings, physics, GravityX, GravityY, PixToMetres
-  	inheritPhysicsSettings: {bool}, false, Enable the inheritance of this Physics settings independently of the rest of the room settings.
-  	PhysicsWorld: {bool}, false, Enable Physics for the room.
-  	PhysicsWorldGravityX: 0.0, The x component of the gravity vector for the room.
-  	PhysicsWorldGravityY: 10.0, The y component of the gravity vector for the room.
-  	PhysicsWorldPixToMetres: 0.1, The ratio of pixels on screen to metres in the real world for the room. A ratio of 32:1 will be specified as 1/32 (or 0.03125)
-    },
-  parent": { // Folder
-      "name": "Rooms",
-      "path": "folders/Rooms.yy",
-    },
-  
-  tags": [],
+## Layer json
+I haven't documented the layer's json.  
+A layer json is stored within the layers array of the room json.  
+Layer json have variations depending on their type.  
+The most important part of the layer json is the instances array for instance layer, the tiles array fot the tile layer, the assets array for assets layer. Those arrays hold the data for all assets populating the layer
 
 
-// Layer
-____
-I haven't documented the layer's json. 
-A layer json is stored in the layers array of the room json.
-Layer json have variations depending on their type.
-The most important part of the layer json is the instances array for instance layer, the tiles array fot the ile layer, the assets array for assets layer
-Those arrays hold the data for all assets populating the layer
+## Instance json
+I haven't documented the instance's json.  
+An instance json is stored within the instances array of the layer json.  
+A key part of the instance json deals with property stored in both Properties array (using [Property json format](#prop)) and the OverriddenProperties array (using [Overriden Property json format](#over)).
 
-// Instance
-I haven't documented the instance's json. 
-An instance json is stored in the instances array of the layer json.
-A key part of the instance json deals with propery stored in both Properties array and the OverriddenProperties array
+## Tiles data
+Tiles data is stored within the Tiles array of the room json.  
+YY uses the serialized format for tiles data. This is just the list of all tiles data one after another (considering tile index and mirroring).  
+Game Maker 2.3 introduced a new format which is the compressed format which is more complex to encode. Game Maker will automaticaly translates tiles data frop the serialized format to the compressed format so that we can just lazily parse data using the serialized formating.  
+Please note that if you change a tile layer in a project currently opened in Game Mzker IDE, you will need to close and reopen the room for your changes to be reflected in the room editor.
+
+
+## Object .yy file / json
+properties array and overriddenProperties arrays are the most important attributes for YY library.
+
+  |Attribute             |Type         |Value (= or example)	        |Definition/Note
+  |---                   |---          |---                             |---
+  |resourceType:         |{string},    |= "GMObject",                   |the type that you will find in all Game Maker resources.
+  |resourceVersion:      |{float},     |= "1.0",                        |the formating version. 1.0 seems to always work even if I saw some resources with 1.1.
+  |name:                 |{string},    |Ex: "oBackground",              |the name of the resource as it appears in your Game Maker project.
+  |spriteId:             |{struct},    |{see below},                    |a struct with two attributes (name, path) pointing to the sprite resource associated to this object.	
+  |  >name:              |{string},    |Ex: "sSPR",                     |the name of the sprite resource as it appears in your Game Maker project.
+  |  >path:              |{file path}, |Ex: sprites/sSPR/sSPR.yy",      |the path to the sprite resource. Path is relative to the Game Maker project directory.
+  |solid:                |{bool},      |Ex: false                       |is the object solid, as defined by Game Maker Object Editor. YY does not modify this
+  |visible:              |{bool},      |Ex: false                       |is the object visible, as defined by Game Maker Object Editor. YY does not modify this
+  |persistent:           |{bool},      |Ex: true                        |is the object persistent, as defined by Game Maker Object Editor. YY does not modify this
+  |managed:              |{bool},      |Ex: false                       |I don't know what this is. YY does not modify this.
+  |spriteMaskId:         |{int?}       |Ex: null                        |I guess it has to do with collision masj. YY does not modify this.
+  |physicsObject:        |{bool},      |Ex: false                       |value of the associated physic attribute, YY does not modify this.
+  |physicsSensor:        |{bool},      |Ex: false                       |value of the associated physic attribute, YY does not modify this.
+  |physicsShape:         |{int?},      |Ex: 1                           |value of the associated physic attribute, YY does not modify this.
+  |physicsGroup:         |{int?},      |Ex: 0                           |value of the associated physic attribute, YY does not modify this.
+  |physicsDensity:       |{real},      |Ex: 0.5                         |value of the associated physic attribute, YY does not modify this.
+  |physicsRestitution:   |{real},      |Ex: 0.1                         |value of the associated physic attribute, YY does not modify this.
+  |physicsLinearDamping: |{real},      |Ex: 0.1                         |value of the associated physic attribute, YY does not modify this.
+  |physicsAngularDamping:|{real},      |Ex: 0.1                         |value of the associated physic attribute, YY does not modify this.
+  |physicsFriction:      |{real},      |Ex: 0.2                         |value of the associated physic attribute, YY does not modify this.
+  |physicsStartAwake:    |{bool},      |Ex: true                        |value of the associated physic attribute, YY does not modify this.
+  |physicsKinematic:     |{bool},      |Ex: false                       |value of the associated physic attribute, YY does not modify this.
+  |physicsShapePoints:   |{array},     |Ex: []                          |value of the associated physic attribute, YY does not modify this.
+  |eventList:            |{array},     |Ex: []                          |list of events defined in Game Maker. Each defined as a struct. YY does not modify this.
+  |properties:           |{array}      |Ex: []                          |array of overriden properties (see format below // Property json)
+  |overriddenProperties: |{array}      |Ex: []                          |array of  properties (see format below // Overridden properties json)
+  |parent:               |{struct},    |{see below},                    |a struct with two attributes (name, path) pointing to the folder resource (Group from Game MAker IDE)? I do not use this.	
+  |  >name:              |{string},    |Ex: "MyGroup",                  |name of the folder resource as it appears in your Game Maker project.
+  |  >path:              |{file path}, |Ex: folders/MyGroup/MyGroup.yy",|path to the folder resource. Path is relative to the Game Maker project directory.
+  |tags:                 |{array},     |Ex: []                          |I think this is the list of tags defined for the object. YY does not modify this.
+
+## <a name="prop">Property json</a>
+A property is a variable from the [Variables Definitions] section of the Object Editor. 
+Property json appear in object files and within instances data in room files.
+Properties need to use the proper category in object files (Property or overriddenProperty) and to reference the proper object (where it is defined)
+'classic' Properties are those just defined in the current object and not in its parents/ancestors. They appear in the object file using the Property type and reference the current object.
+
+The struct is mainly flat with two nested structs
+  |Attribute             |Type         | Value (= or example)	        | Definition/Note
+  |---                   |---          | ---                            | ---
+  |name                  |             |                                | name of the property
+  |value                 |             |                                | default value of the property
+  |type                  |{int}        |                                | value defining the type o variable
+  |rangeMin		 |             |                                | 
+  |rangeMax		 |	       |                                | 
+  |rangeEnabled          |{bool},      |                                | 
+  |propertyId		 |	       |                                | 
+  |objectId		 |	       |                                | 
+
+## <a name="over">Overriden Property json</a>
+A property is a variable from the [Variables Definitions] section of the Object Editor.   
+Property json appear in object files and within instances data in room files.  
+Properties need to use the proper category in object files (Property or overriddenProperty) and to reference the proper object (where it is defined). 
+Overridden properties are those inherited from parents/ancestors but modified for the current object. They appear in the object file using the overriddenProperty type and reference the ??? and in instance.
+  The struct is mainly flat with two nested structs
+  |Attribute             |Type         | Value (= or example)	        | Definition/Note
+  |---                   |---          | ---                            | ---
+  name 			         |			   | empty (name is ins propertyId) | 
+  value			         |			   |                                | 
+  propertyId			 |			   |                                | 
+  objectId			     |			   |                                | 
+
+Please note, fully inherited properties (= those not modified in the object and are fully inherited from parents/ancestors) do not appear in the object file. When defined in an instance they reference the exact parent where they come from.
+
 
 // Views
 _____
@@ -1372,10 +1387,6 @@ hspeed: -1, horizontal speed of the camera for Object Following feature.
 vspeed: -1, vertical speed of the camera for Object Following feature.  
 objectId: null, follower object for the camera Object Following feature.
 
-
-Instance struct:
-Each instance is a struct with mainly flat variables.
-There is also one interesting array used to store the values defined for variables in Game Maker Room Editor. Each variable set in the editor will have struct variable in this array. The only tricky part is that this struct needs to point to the object owning the variable. So if it is inherited it needs to point to the proper parent/ ancestor.
 */
 #endregion
 
