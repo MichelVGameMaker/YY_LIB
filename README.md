@@ -8,9 +8,9 @@ YY allows to modify Game Maker room files and object files. It is intended to he
 
 ### Features
 It allows to modify rooms, in particular by creating layers and populating them with instances or tiles.  
-It also allows to modify object, in particular by creating properties (=variables from [Variables Definitions] section of Objects Editor).  
-I tried to keep the syntax close to what you would use in GML so that you can, for example, create an instance in your room file with instance_create().  
-There is a basic demo with two example of how to parse a room at runtime in room .yy file. The first showcases serializing instances created at runtime. The second showcases serializing tiles that you have created at runtime.  
+It also allows to modify objects, in particular by creating properties (properties=variables from the [Variables Definitions] section of Objects Editor).  
+I tried to keep the syntax close to what you would use in GML so that you can, for example, create an instance in your room file with instance_create(x, y, layer, object).  
+There is a basic demo with two examples of how to parse a room content at runtime in a room .yy file. The first showcases serializing instances created at runtime. The second showcases serializing tiles that you have created at runtime.  
 I have another example allowing to import the full configuration for entities from a LDtk file, but it is not documented.
 
 ### License
@@ -50,7 +50,7 @@ Example:<br>
 > var _inst _room.instance_create(0, 0, _room.get_layer("layer_1"), "YY_TEST_object3") // create an instance onto the layer<br>
 > _room.instance_set_property(_inst, "health", 10) // set a property for the instance (=variables value from the [Variable] section for the instance in the Room Editor).<br>
 // 3.write back the data to the file<br>
-_room_struct.save_to_directory();<br>
+_room.save_to_directory();<br>
 
 ### Effects within Game Maker IDE
 Once a Game Maker .yy file updated with save_to_directory(), changes will be reflected within Game Maker IDE. Updating a project which is currently opened is fine. Indeed, Game Maker IDE is smart enough to detect these changes 'live' and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted and the resource will be kept unchanged, if you click 'Reload', YY changes will be taken into account.  
