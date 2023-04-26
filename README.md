@@ -4,7 +4,7 @@ YY is a small collection of functions to adjust Game Maker room files and object
 ## About L2G
 
 ### Use case
-YY allows to modify Game Maker room files and object files. It is intended to help people work on level editor features. For example to import room data from an external level editor or to replicate in room data modifications done at runtime. 
+YY allows to modify Game Maker room files and object files. It is intended to help people work on level editor features. For example to import room data from an external level editor into you .yy file or to replicate in your project, the modifications you perform in rooms at runtime. 
 
 ### Features
 It allows to modify rooms, in particular by creating layers and populating them with instances or tiles.  
@@ -26,16 +26,16 @@ YY is tested on Game Maker LTS and on windows platform.
 YY needs to be imported as a local package in your Game Maker project.
 -	Download the .yymp file from GITHUB.
 -	Import it inside your project. You can do this by dragging the *. yymp file from an explorer window onto the GameMaker IDE or by clicking "Import Local Package" within the Tools Menu. In both case, a window will pop up to define import parameters. Click “add all” and “OK”.  
-This will create a two folders in your Asset Browser labeled “YY - GM Files Modifier” and "SNAP". The code is ready to be used.
+This will create two folders in your Asset Browser labeled “YY - GM Files Modifier” and "SNAP". The code is ready to be used.
 
 ### Make sure sandboxing is de-activated
-There is likely one last step to use YY. Indeed, if the Game Maker files you want to update are located out of Game Maker sandbox repository, which will surely be the case, you need to de-activate sandboxing. You can do so, on the Desktop targets (Windows, macOS, and Ubuntu (Linux)), by checking the “Disable file system sandbox” option in the Game Options for the target platform.
+There is likely one last step to use YY library. Indeed, if the Game Maker files you want to update are located out of the Game Maker sandbox repository, which will likely be the case, you need to de-activate sandboxing. You can do so, on the Desktop targets (Windows, macOS, and Ubuntu (Linux)), by checking the “Disable file system sandbox” option in the Game Options for the target platform.
 
 
 ## How to use
 
 ### Overall process
-YY is not capable of creating files (to avoid having too much impact in your project structure), you will need to recycle existing files already created within Game Maker. 
+YY is not capable of creating files (to avoid having too much impact in your project structure), you will need to recycle existing files already created within Game Maker. The room file needs to exist, he can be empty or not. Then YY will use this file to set its content accordingly to your instructions resulting in a new file and thus an update room in Game Maker Studio.
 The typical process runs in three steps: 
 -	1.create a yy_class from an existing Game Maker file, this will hold all data from the targeted Game Maker file, 
 -	2.update the data accordingly to your need, 
@@ -53,11 +53,11 @@ Example:<br>
 _room.save_to_directory();<br>
 
 ### Effects within Game Maker IDE
-Once a Game Maker .yy file updated with save_to_directory(), changes will be reflected within Game Maker IDE. Updating a project which is currently opened is fine. Indeed, Game Maker IDE is smart enough to detect these changes 'live' and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted and the resource will be kept unchanged, if you click 'Reload', YY changes will be taken into account.  
+Once a Game Maker .yy file updated with save_to_directory(), changes will be reflected within Game Maker Studio IDE. Updating a project which is currently opened is fine. Indeed, Game Maker IDE is smart enough to detect these changes 'live' and ask you what to do in a warning window. If you click 'Save', YY changes will be deleted and the resource will be kept unchanged, if you click 'Reload', YY changes will be taken into account.  
 
 Please note that, some updates are not imediately visible in Game Maker IDE, notably:
 - when modifying object variables from the [Variables Definitions] section of the Object Editor, you will need to close the section and reopen it.
-- when modifying tiles for a tile layer, you will need to close the associated room and reopen it.
+- when modifying tiles for a tile layer, you will need to completely close the associated room and reopen it.
 
 ### Features overview
 Layer :
